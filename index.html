@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💜</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff7eb3, #8e44ad);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            direction: rtl;
+            color: white;
+            position: relative;
+        }
+
+        /* القلوب المتطايرة */
+        .heart {
+            position: absolute;
+            animation: float 6s linear infinite;
+            opacity: .4;
+            z-index: 0;
+            pointer-events: none;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+
+        /* تأثير لمس الشاشة */
+        .touch-heart {
+            position: fixed;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 999;
+            animation: touch-float 1s ease-out forwards;
+        }
+        @keyframes touch-float {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -150%) scale(1.5); opacity: 0; }
+        }
+
+        /* برواز العنوان */
+        .special-title {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+            border: 3px double white;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 10px #fff; }
+            to { box-shadow: 0 0 20px #ff4da6, 0 0 30px #ff4da6; }
+        }
+
+        /* شاشة تسجيل الدخول */
+        .login-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            width: 320px;
+            z-index: 100;
+        }
+
+        .password-container { position: relative; width: 100%; }
+        input {
+            width: 85%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .toggle-pass {
+            position: absolute; left: 25px; top: 50%; transform: translateY(-50%);
+            cursor: pointer; color: #333; font-size: 18px;
+        }
+
+        button {
+            padding: 12px 25px; border: none; border-radius: 12px;
+            background: #ff4da6; color: white; cursor: pointer; font-weight: bold;
+        }
+
+        /* الشاشات */
+        .screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow-y: auto; text-align: center; padding: 40px 15px; box-sizing: border-box;
+            background: linear-gradient(135deg, #ff7eb3, #8e44ad); z-index: 50;
+        }
+
+        /* العداد */
+        .counter-container { display: flex; flex-direction: column; align-items: center; gap: 15px; margin: 25px 0; }
+        .counter-row { display: flex; justify-content: center; gap: 10px; }
+        .counter-box { background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 15px; width: 75px; }
+
+        .story-box, .message-trigger {
+            margin: 20px auto; padding: 15px 30px; width: fit-content; border-radius: 30px;
+            background: rgba(255, 255, 255, 0.25); cursor: pointer; border: 1px solid gold; font-weight: bold;
+        }
+
+        /* كروت الألبومات مربعات كبيرة */
+        .albums-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            padding: 10px 0;
+        }
+        .album-card {
+            width: 90%;
+            max-width: 350px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 25px;
+            transition: 0.3s;
+            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .album-card:active { transform: scale(0.96); }
+        .album-card img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 18px;
+        }
+        .album-card p {
+            margin: 15px 0 5px 0;
+            font-weight: bold;
+            font-size: 20px;
+            color: #fff;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+        }
+
+        /* ميديا داخل الألبوم */
+        .media-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 40px;
+        }
+        .media-container img, .media-container video {
+            width: 95%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        /* بصمة اليد */
+        .handprint-area {
+            width: 100px; height: 100px; background: rgba(255,255,255,0.2);
+            border-radius: 50%; margin: 20px auto; display: flex;
+            justify-content: center; align-items: center; font-size: 50px;
+            cursor: pointer; border: 2px solid #fff;
+            box-shadow: 0 0 15px white;
+        }
+
+        /* الرسائل */
+        .overlay-message {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); z-index: 200; justify-content: center; align-items: center;
+        }
+        .msg-content {
+            background: white; color: #333; padding: 30px; border-radius: 20px;
+            width: 85%; max-width: 400px; text-align: center; border: 4px double #8e44ad;
+        }
+
+        .back-btn { background: #333; margin: 10px 0 40px 0; padding: 10px 20px; }
+        
+        .promise-heart {
+            position: fixed; font-size: 35px; z-index: 300; pointer-events: none;
+            animation: fall-promise 3s forwards;
+        }
+        @keyframes fall-promise {
+            0% { transform: translateY(-10vh) scale(0); opacity: 1; }
+            100% { transform: translateY(110vh) scale(1.8); opacity: 0; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box" id="login">
+        <h2>Welcome Dileğim❤️‍🩹</h2>
+        <input type="text" id="username" placeholder="دخلي اسمك🌚">
+        <div class="password-container">
+            <input type="password" id="password" placeholder="خمني وفكري بقي👀😂🤍">
+            <span class="toggle-pass" onclick="togglePassword()">👁️</span>
+        </div>
+        <button onclick="login()">ادخلي 💜</button>
+    </div>
+
+    <div id="home" class="screen">
+        <h2>حكايتنا بدأت بقالها....👀🌚</h2>
+        <div class="counter-container">
+            <div class="counter-row">
+                <div class="counter-box"><span id="months">0</span><br>شهور</div>
+                <div class="counter-box"><span id="days">0</span><br>أيام</div>
+                <div class="counter-box"><span id="hours">0</span><br>ساعات</div>
+            </div>
+            <div class="counter-row">
+                <div class="counter-box"><span id="minutes">0</span><br>دقايق</div>
+                <div class="counter-box"><span id="seconds">0</span><br>ثواني</div>
+            </div>
+        </div>
+        <div class="story-box" onclick="showScreen('albumsScreen')">✨✨ أبدأ الحكاية 💜 ✨✨</div>
+    </div>
+
+    <div id="albumsScreen" class="screen">
+        <div class="special-title">
+            <h2 style="margin:0;">3nnooody & 7amooody🌚</h2>
+        </div>
+        
+        <div class="albums-list">
+            <div class="album-card" onclick="showScreen('album1Content')">
+                <img src="images/cover1.jpg">
+                <p>اول رمضان سواا🌚🤍</p>
+            </div>
+            <div class="album-card" onclick="showScreen('album2Content')">
+                <img src="images/cover2.jpg">
+                <p>اول هدية 🥹🌚</p>
+            </div>
+            <div class="album-card" onclick="showScreen('album3Content')">
+                <img src="images/cover3.jpg">
+                <p>عنودي القمر وستيكراتها 😂💞</p>
+            </div>
+        </div>
+        
+        <div class="story-box" style="margin-top: 30px;" onclick="openMessage('surprise')">دوسي كمان🙈</div>
+        
+        <p style="margin-top:20px; font-weight:bold;">حطي إيدك هنا ✋🏻</p>
+        <div class="handprint-area" onclick="openMessage('handMsg')">✋🏻</div>
+        
+        <button class="back-btn" onclick="showScreen('home')">رجوع للرئيسية</button>
+    </div>
+
+    <div id="album1Content" class="screen">
+        <h2>اول رمضان سواا🌚🤍</h2>
+        <div class="media-container">
+            <video src="videos/ramadan.mp4" loop autoplay muted playsinline></video>
+            <img src="images/ramadan1.jpg">
+            <img src="images/ramadan2.jpg">
+        </div>
+        <div class="message-trigger" onclick="openMessage('msg1')">دوسي هنا 🌚</div>
+        <button class="back-btn" onclick="closeAlbum()">رجوع للألبومات</button>
+    </div>
+
+    <div id="album2Content" class="screen">
+        <h2>اول هدية 🥹🌚</h2>
+        <div class="media-container">
+            <video src="videos/gift.mp4" loop autoplay muted playsinline></video>
+            <img src="images/gift1.jpg">
+            <img src="images/gift2.jpg">
+            <img src="images/gift3.jpg">
+            <img src="images/gift4.jpg">
+        </div>
+        <div class="message-trigger" onclick="openMessage('msg2')">دوسي هنا 🌚</div>
+        <button class="back-btn" onclick="closeAlbum()">رجوع للألبومات</button>
+    </div>
+
+    <div id="album3Content" class="screen">
+        <h2>عنودي القمر وستيكراتها 😂💞</h2>
+        <div class="media-container">
+            <video src="videos/anoody1.mp4" loop autoplay muted playsinline></video>
+            <video src="videos/anoody2.mp4" loop autoplay muted playsinline></video>
+            <video src="videos/anoody3.mp4" loop autoplay muted playsinline></video>
+            <img src="images/moon1.jpg">
+            <img src="images/moon2.jpg">
+        </div>
+        <div class="message-trigger" onclick="openMessage('msg3')">دوسي هنا 🌚</div>
+        <button class="back-btn" onclick="closeAlbum()">رجوع للألبومات</button>
+    </div>
+
+    <div id="overlayMsg" class="overlay-message">
+        <div class="msg-content">
+            <p id="actualText"></p>
+            <div id="normalButtons">
+                <button onclick="toggleMessage(false)" style="background:#8e44ad">رجوع</button>
+            </div>
+            <div id="promiseButtons" style="display:none; gap:10px; justify-content:center;">
+                <button onclick="toggleMessage(false)" style="background:#333">رجوع</button>
+                <button onclick="promiseEffect()" style="background:#e91e63">وعد نحاول؟</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="music" loop><source src="love.mp3" type="audio/mpeg"></audio>
+
+<script>
+    // قلوب الخلفية
+    for(let i=0; i<30; i++){
+        let heart = document.createElement("div"); heart.className = "heart"; heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw"; heart.style.animationDuration = (Math.random()*5+4)+"s";
+        document.body.appendChild(heart);
+    }
+
+    // تأثير لمس الشاشة (الجديد)
+    document.addEventListener('click', function(e) {
+        let touchH = document.createElement("div");
+        touchH.className = "touch-heart";
+        touchH.innerHTML = "❤️";
+        touchH.style.left = e.clientX + "px";
+        touchH.style.top = e.clientY + "px";
+        document.body.appendChild(touchH);
+        setTimeout(() => touchH.remove(), 1000);
+    });
+
+    function togglePassword() {
+        let pass = document.getElementById("password");
+        pass.type = pass.type === "password" ? "text" : "password";
+    }
+
+    function login() {
+        let user = document.getElementById("username").value;
+        let pass = document.getElementById("password").value;
+        if((user==="Hanoody" && pass==="13/10/2025") || (user==="Mohamed" && pass==="060617")) {
+            openMessage('success');
+            setTimeout(() => { toggleMessage(false); document.getElementById("login").style.display = "none"; showScreen('home'); startCounter(); document.getElementById("music").play(); }, 2000);
+        } else { openMessage('fail'); }
+    }
+
+    function startCounter() {
+        let startDate = new Date("2025-10-13T13:00:00");
+        setInterval(function() {
+            let diff = new Date() - startDate;
+            document.getElementById("months").innerText = Math.floor(diff / 2592000000);
+            document.getElementById("days").innerText = Math.floor((diff/86400000)%30);
+            document.getElementById("hours").innerText = Math.floor((diff/3600000)%24);
+            document.getElementById("minutes").innerText = Math.floor((diff/60000)%60);
+            document.getElementById("seconds").innerText = Math.floor((diff/1000)%60);
+        }, 1000);
+    }
+
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+        document.getElementById(screenId).style.display = 'block';
+        let vids = document.querySelectorAll('#' + screenId + ' video');
+        vids.forEach(v => { v.muted = true; v.play(); v.onclick = function() { v.muted = !v.muted; }; });
+    }
+
+    function closeAlbum() { document.querySelectorAll('video').forEach(v => v.pause()); showScreen('albumsScreen'); }
+
+    function openMessage(type) {
+        let text = ""; let isHand = false;
+        document.getElementById("normalButtons").style.display = "block";
+        document.getElementById("promiseButtons").style.display = "none";
+
+        if(type === 'success') text = "شطورة عنوووووووودي 😊🌚";
+        else if(type === 'fail') text = "جربي تاني 👀😂";
+        else if(type === 'msg1') text = "كل عام وانتي بخير وطيبة 🤍 اول رمضان سوااااا ومش آخر واحد باذن الله 🤲🏻 وعدتك وقده أن شاء الله 🤲🏻💞";
+        else if(type === 'msg2') text = "Thanks for everything 3nnooooooody🤍🙈 احلى صدفة والله ربنا يديمها ليا ومتبقاش فترة وخلاص باذن الله أن شاء الله🥹💞";
+        else if(type === 'msg3') text = "معايا حاجات كتير بس خلي دول دلوقتي 😂♥️للاسف مش عارف اضيف ستيكرات وكدا بس عادي عادي 😂😂 احلى واغلى عنووودي ف الدنيا ربنا يديمها باذن الللللللللللله 🌚🤲🏻🤲🏻";
+        else if(type === 'surprise') text = "احلى صدفة والله ربنا بيحبني عشان بعتك ليا كل يوم بشكره والله احلى واغلى عنووودي🌚 متزعليش مني وحقك عليا لو بضايقك أو برخم عليكي اكيد مقصدش بس ببقي خايف عليكي وغيران وحطي تحت غيران دي مليون خط وكمان خايف اخسرك حقك عليا ي عنودي 🥹🤍";
+        else if(type === 'handMsg') { text = "ودي مش آخر حاجة بينا… ده إحنا لسه في أول الحكاية 🤍"; isHand = true; }
+
+        document.getElementById("actualText").innerText = text;
+        if(isHand) { document.getElementById("normalButtons").style.display = "none"; document.getElementById("promiseButtons").style.display = "flex"; }
+        document.getElementById("overlayMsg").style.display = "flex";
+    }
+
+    function promiseEffect() {
+        for(let i=0; i<80; i++) {
+            setTimeout(() => {
+                let h = document.createElement("div"); h.className = "promise-heart"; h.innerHTML = "❤️";
+                h.style.left = Math.random() * 100 + "vw"; h.style.top = "-5vh";
+                h.style.animationDuration = (Math.random()*2+1)+"s";
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 3000);
+            }, i * 25);
+        }
+    }
+
+    function toggleMessage(show) { document.getElementById("overlayMsg").style.display = show ? "flex" : "none"; }
+</script>
+
+</body>
+</html>
