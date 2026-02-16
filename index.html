@@ -316,14 +316,16 @@
     function login() {
         let user = document.getElementById("username").value;
         let pass = document.getElementById("password").value;
-        if((user==="Hanoody" && pass==="13/10/2025") || (user==="Mohamed" && pass==="060617")) {
+        // هنا تم تعديل الباسوورد لـ 23/10/2025
+        if((user==="Hanoody" && pass==="23/10/2025") || (user==="Mohamed" && pass==="060617")) {
             openMessage('success');
             setTimeout(() => { toggleMessage(false); document.getElementById("login").style.display = "none"; showScreen('home'); startCounter(); document.getElementById("music").play(); }, 2000);
         } else { openMessage('fail'); }
     }
 
     function startCounter() {
-        let startDate = new Date("2025-10-13T13:00:00");
+        // هنا تم تعديل تاريخ بداية العداد لـ 23 اكتوبر 2025
+        let startDate = new Date("2025-10-23T13:00:00");
         setInterval(function() {
             let diff = new Date() - startDate;
             document.getElementById("months").innerText = Math.floor(diff / 2592000000);
@@ -377,5 +379,4 @@
 </script>
 
 </body>
-            </html>
-                
+</html>
