@@ -33,18 +33,6 @@
             100% { transform: translateY(-10vh); opacity: 0; }
         }
 
-        .touch-heart {
-            position: fixed;
-            font-size: 20px;
-            pointer-events: none;
-            z-index: 999;
-            animation: touch-float 1s ease-out forwards;
-        }
-        @keyframes touch-float {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            100% { transform: translate(-50%, -150%) scale(1.5); opacity: 0; }
-        }
-
         .login-box {
             background: rgba(255, 255, 255, 0.15);
             padding: 30px;
@@ -211,21 +199,38 @@
 
     <div id="album1Content" class="screen">
         <h2>اول رمضان سواا🌚🤍</h2>
-        <div class="media-container"><video src="ramadan.mp4" loop autoplay muted playsinline></video><img src="ramadan1.jpg"></div>
+        <div class="media-container">
+            <video src="ramadan.mp4" loop autoplay muted playsinline></video>
+            <img src="ramadan1.jpg">
+            <img src="ramadan2.jpg">
+        </div>
         <button class="message-trigger" onclick="openMessage('msg1')">دوسي هنا 🌚</button>
         <button class="back-btn" onclick="showScreen('albumsScreen')">رجوع</button>
     </div>
 
     <div id="album2Content" class="screen">
         <h2>اول هدية 🥹🌚</h2>
-        <div class="media-container"><video src="gift.mp4" loop autoplay muted playsinline></video><img src="gift1.jpg"></div>
+        <div class="media-container">
+            <video src="gift_vid1.mp4" loop autoplay muted playsinline></video>
+            <video src="gift_vid2.mp4" loop autoplay muted playsinline></video>
+            <img src="gift1.jpg">
+            <img src="gift2.jpg">
+            <img src="gift3.jpg">
+            <img src="gift4.jpg">
+        </div>
         <button class="message-trigger" onclick="openMessage('msg2')">دوسي هنا 🌚</button>
         <button class="back-btn" onclick="showScreen('albumsScreen')">رجوع</button>
     </div>
 
     <div id="album3Content" class="screen">
         <h2>عنودي القمر 😂💞</h2>
-        <div class="media-container"><img src="moon1.jpg"><img src="moon2.jpg"></div>
+        <div class="media-container">
+            <video src="moon_vid1.mp4" loop autoplay muted playsinline></video>
+            <video src="moon_vid2.mp4" loop autoplay muted playsinline></video>
+            <img src="moon1.jpg">
+            <img src="moon2.jpg">
+            <img src="moon3.jpg">
+        </div>
         <button class="message-trigger" onclick="openMessage('msg3')">دوسي هنا 🌚</button>
         <button class="back-btn" onclick="showScreen('albumsScreen')">رجوع</button>
     </div>
@@ -315,5 +320,4 @@
     function toggleMessage(show) { document.getElementById("overlayMsg").style.display = show ? "flex" : "none"; }
 </script>
 </body>
-    </html>
-    
+</html>
