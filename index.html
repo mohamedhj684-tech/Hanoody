@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -46,22 +45,7 @@
             100% { transform: translate(-50%, -150%) scale(1.5); opacity: 0; }
         }
 
-        .special-title {
-            display: inline-block;
-            padding: 15px 35px;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            margin-bottom: 25px;
-            border: 3px double white;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        @keyframes glow {
-            from { box-shadow: 0 0 10px #fff; }
-            to { box-shadow: 0 0 20px #ff4da6, 0 0 30px #ff4da6; }
-        }
-
+        /* بوكس اللوجين الأصلي */
         .login-box {
             background: rgba(255, 255, 255, 0.15);
             padding: 30px;
@@ -95,75 +79,59 @@
         .screen {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             overflow-y: auto; text-align: center; padding: 40px 15px; box-sizing: border-box;
-            background: linear-gradient(135deg, #ff7eb3, #8e44ad); z-index: 50;
+            background: linear-gradient(135deg, #ff7eb3, #8e44ad); z-index: 500;
         }
 
-        /* العداد الأصلي (صف واحد) */
+        /* البوكس البيضاوي الموحد للمسافة */
+        .pulse-oval-box {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 70px;
+            padding: 25px 20px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .ekg-line-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            padding: 5px 15px;
+            width: 120px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ekg-path {
+            stroke: #fff;
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 100;
+            animation: dash 3s linear infinite;
+            filter: drop-shadow(0 0 5px #fff);
+        }
+        @keyframes dash { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+
         .counter-container { display: flex; flex-direction: column; align-items: center; gap: 15px; margin: 25px 0; }
         .counter-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
         .counter-box { background: rgba(255, 255, 255, 0.2); padding: 12px; border-radius: 15px; width: 65px; font-size: 13px; }
         .counter-box span { display: block; font-weight: bold; font-size: 18px; }
 
-        /* العداد التنازلي (2 فوق و 2 تحت) */
-        .bday-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 10px; 
-            max-width: 180px; 
-            margin: 0 auto;
-        }
+        .bday-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 180px; margin: 0 auto; }
+        .story-box, .message-trigger { margin: 20px auto; padding: 15px 30px; width: fit-content; border-radius: 30px; background: rgba(255, 255, 255, 0.25); cursor: pointer; border: 1px solid gold; font-weight: bold; }
+        
+        .special-btn { background: rgba(255, 255, 255, 0.2); border: 2px solid #fff; border-radius: 20px; padding: 15px 30px; font-size: 30px; cursor: pointer; animation: pulse-btn 2s infinite; }
+        @keyframes pulse-btn { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 15px #fff; } 100% { transform: scale(1); } }
 
-        .story-box, .message-trigger {
-            margin: 20px auto; padding: 15px 30px; width: fit-content; border-radius: 30px;
-            background: rgba(255, 255, 255, 0.25); cursor: pointer; border: 1px solid gold; font-weight: bold;
-        }
+        .album-card { width: 90%; max-width: 350px; cursor: pointer; background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 25px; border: 2px solid rgba(255,255,255,0.3); margin: 10px auto; }
+        .album-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 18px; }
 
-        .gift-section { display: flex; justify-content: center; margin: 20px 0; }
-        .special-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid #fff;
-            border-radius: 20px;
-            padding: 15px 30px;
-            font-size: 30px;
-            cursor: pointer;
-            animation: pulse-btn 2s infinite;
-        }
-        @keyframes pulse-btn {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); box-shadow: 0 0 15px #fff; }
-            100% { transform: scale(1); }
-        }
-
-        .albums-list { display: flex; flex-direction: column; align-items: center; gap: 25px; padding: 10px 0; }
-        .album-card {
-            width: 90%; max-width: 350px; cursor: pointer;
-            background: rgba(255, 255, 255, 0.15); padding: 15px;
-            border-radius: 25px; transition: 0.3s; border: 2px solid rgba(255,255,255,0.3);
-        }
-        .album-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 18px; }
-        .album-card p { margin: 15px 0 5px 0; font-weight: bold; font-size: 20px; color: #fff; }
-
-        .media-container { display: flex; flex-direction: column; align-items: center; gap: 20px; padding-bottom: 40px; }
-        .media-container img, .media-container video { width: 95%; max-width: 500px; border-radius: 20px; }
-
-        .handprint-area {
-            width: 100px; height: 100px; background: rgba(255,255,255,0.2);
-            border-radius: 50%; margin: 20px auto; display: flex;
-            justify-content: center; align-items: center; font-size: 50px;
-            cursor: pointer; border: 2px solid #fff; box-shadow: 0 0 15px white;
-        }
-
-        .overlay-message {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.92); z-index: 200; justify-content: center; align-items: center;
-        }
-        .msg-content {
-            background: white; color: #333; padding: 30px; border-radius: 20px;
-            width: 85%; max-width: 400px; text-align: center; border: 4px double #8e44ad;
-        }
-        .back-btn { background: #333; margin: 10px 0 40px 0; padding: 10px 20px; }
-        .promise-heart { position: fixed; font-size: 35px; z-index: 300; pointer-events: none; animation: fall-promise 3s forwards; }
-        @keyframes fall-promise { 0% { transform: translateY(-10vh) scale(0); opacity: 1; } 100% { transform: translateY(110vh) scale(1.8); opacity: 0; } }
+        .overlay-message { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 1000; justify-content: center; align-items: center; }
+        .msg-content { background: white; color: #333; padding: 30px; border-radius: 20px; width: 85%; max-width: 400px; text-align: center; border: 4px double #8e44ad; }
+        .back-btn { background: #333; margin: 10px 0 40px 0; padding: 10px 20px; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 
@@ -180,6 +148,25 @@
     </div>
 
     <div id="home" class="screen">
+        <div class="pulse-oval-box">
+            <div style="color: #ffd700; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">شايفة المسافة بينا قد اي.....🥲👀</div>
+            
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                <span style="font-weight: bold;">عنوووودي</span>
+                <div class="ekg-line-container">
+                    <svg viewBox="0 0 100 30" style="width: 100%; height: 100%;">
+                        <path class="ekg-path" d="M0,15 H35 L38,5 L42,25 L45,15 H100" />
+                    </svg>
+                </div>
+                <span style="font-weight: bold;">حموووودي</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+                <span style="font-weight: bold; font-size: 1.2rem;">424 كم</span>
+                <button onclick="openMessage('distMsg')" style="background: #e91e63; border: none; padding: 8px 20px; border-radius: 20px; color: white; cursor: pointer; font-weight: bold;">افتحي كدا👀</button>
+            </div>
+        </div>
+
         <h2>حكايتنا بدأت بقالها....👀🌚</h2>
         <div class="counter-container">
             <div class="counter-row">
@@ -203,105 +190,59 @@
             <div class="counter-box" style="width: 80px; background: rgba(142, 68, 173, 0.4);"><span id="b-seconds">0</span>ثانية</div>
         </div>
 
-        <div class="gift-section">
-            <div class="special-btn" onclick="openBirthdayGift()">🎁</div>
-        </div>
+        <div style="margin: 20px 0;"><div class="special-btn" onclick="openGiftScreen()">🎁</div></div>
+    </div>
+
+    <div id="giftScreen" class="screen">
+        <h2 style="margin-top: 50px;">الهدية المنتظرة 🎁</h2>
+        <p>جاهزة؟ 👀</p>
+        <button class="back-btn" onclick="closeGiftScreen()">رجوع</button>
     </div>
 
     <div id="albumsScreen" class="screen">
-        <div class="special-title"><h2 style="margin:0;">3nnooody & 7amooody🌚</h2></div>
-        <div class="albums-list">
-            <div class="album-card" onclick="showScreen('album1Content')"><img src="cover1.jpg"><p>اول رمضان سواا🌚🤍</p></div>
-            <div class="album-card" onclick="showScreen('album2Content')"><img src="cover2.jpg"><p>اول هدية 🥹🌚</p></div>
-            <div class="album-card" onclick="showScreen('album3Content')"><img src="cover3.jpg"><p>عنودي القمر وستيكراتها 😂💞</p></div>
-        </div>
-        <div class="story-box" style="margin-top: 30px;" onclick="openMessage('surprise')">دوسي كمان🙈</div>
-        <p style="margin-top:20px; font-weight:bold;">حطي إيدك هنا ✋🏻</p>
-        <div class="handprint-area" onclick="openMessage('handMsg')">✋🏻</div>
+        <div class="album-card" onclick="showScreen('album1Content')"><img src="cover1.jpg"><p>اول رمضان سواا🌚🤍</p></div>
         <button class="back-btn" onclick="showScreen('home')">رجوع للرئيسية</button>
-    </div>
-
-    <div id="album1Content" class="screen">
-        <h2>اول رمضان سواا🌚🤍</h2>
-        <div class="media-container"><video src="ramadan.mp4" loop autoplay muted playsinline></video><img src="ramadan1.jpg"><img src="ramadan2.jpg"></div>
-        <div class="message-trigger" onclick="openMessage('msg1')">دوسي هنا 🌚</div>
-        <button class="back-btn" onclick="closeAlbum()">رجوع للألبومات</button>
-    </div>
-
-    <div id="album2Content" class="screen">
-        <h2>اول هدية 🥹🌚</h2>
-        <div class="media-container"><video src="gift.mp4" loop autoplay muted playsinline></video><img src="gift1.jpg"><img src="gift2.jpg"><img src="gift3.jpg"><img src="gift4.jpg"></div>
-        <div class="message-trigger" onclick="openMessage('msg2')">دوسي هنا 🌚</div>
-        <button class="back-btn" onclick="closeAlbum()">رجوع للألبومات</button>
-    </div>
-
-    <div id="album3Content" class="screen">
-        <h2>عنودي القمر وستيكراتها 😂💞</h2>
-        <div class="media-container"><video src="anoody1.mp4" loop autoplay muted playsinline></video><video src="anoody2.mp4" loop autoplay muted playsinline></video><video src="anoody3.mp4" loop autoplay muted playsinline></video><img src="moon1.jpg"><img src="moon2.jpg"></div>
-        <div class="message-trigger" onclick="openMessage('msg3')">دوسي هنا 🌚</div>
-        <button class="back-btn" onclick="closeAlbum()">رجوع للألبومات</button>
     </div>
 
     <div id="overlayMsg" class="overlay-message">
         <div class="msg-content">
             <p id="actualText"></p>
-            <div id="normalButtons"><button onclick="toggleMessage(false)" style="background:#8e44ad">رجوع</button></div>
-            <div id="promiseButtons" style="display:none; gap:10px; justify-content:center;"><button onclick="toggleMessage(false)" style="background:#333">رجوع</button><button onclick="promiseEffect()" style="background:#e91e63">وعد نحاول؟</button></div>
+            <button onclick="toggleMessage(false)" style="background:#8e44ad; color:white; border:none; padding:10px 20px; border-radius:10px;">رجوع</button>
         </div>
     </div>
 
     <audio id="music" loop><source src="love.mp3" type="audio/mpeg"></audio>
 
 <script>
-    let isSuperAdmin = false; // متغير لتحديد لو اللي داخل هو المطور
-
-    for(let i=0; i<30; i++){
+    // القلوب الخلفية
+    for(let i=0; i<25; i++){
         let heart = document.createElement("div"); heart.className = "heart"; heart.innerHTML = "❤️";
         heart.style.left = Math.random() * 100 + "vw"; heart.style.animationDuration = (Math.random()*5+4)+"s";
         document.body.appendChild(heart);
     }
 
-    document.addEventListener('click', function(e) {
-        let touchH = document.createElement("div"); touchH.className = "touch-heart"; touchH.innerHTML = "❤️";
-        touchH.style.left = e.clientX + "px"; touchH.style.top = e.clientY + "px";
-        document.body.appendChild(touchH); setTimeout(() => touchH.remove(), 1000);
-    });
-
-    function togglePassword() {
-        let pass = document.getElementById("password");
-        pass.type = pass.type === "password" ? "text" : "password";
-    }
+    function togglePassword() { let pass = document.getElementById("password"); pass.type = pass.type === "password" ? "text" : "password"; }
 
     function login() {
         let user = document.getElementById("username").value;
         let pass = document.getElementById("password").value;
-
-        // التحقق من اليوزر المطور
-        if (user === "Mohamed" && pass === "16/6/2006") {
-            isSuperAdmin = true;
-            openMessage('success');
-            setTimeout(proceedToHome, 2000);
-        } 
-        // التحقق العادي
-        else if ((user === "Hanoody" && pass === "23/10/2025") || (user === "Mohamed" && pass === "060617")) {
-            isSuperAdmin = false;
-            openMessage('success');
-            setTimeout(proceedToHome, 2000);
+        if ((user === "Hanoody" && pass === "23/10/2025") || (user === "Mohamed" && pass === "060617") || (user === "Mohamed" && pass === "16/6/2006")) {
+            document.getElementById("login").style.display = "none";
+            showScreen('home'); startCounter(); document.getElementById("music").play();
         } else { openMessage('fail'); }
     }
 
-    function proceedToHome() {
-        toggleMessage(false); 
-        document.getElementById("login").style.display = "none"; 
-        showScreen('home'); 
-        startCounter(); 
-        document.getElementById("music").play();
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+        document.getElementById(screenId).style.display = 'block';
     }
+
+    function openGiftScreen() { showScreen('giftScreen'); document.getElementById("music").pause(); }
+    function closeGiftScreen() { showScreen('home'); document.getElementById("music").play(); }
 
     function startCounter() {
         let startDate = new Date("2025-10-23T13:00:00");
         let bDayDate = new Date("2026-03-15T00:00:00"); 
-
         setInterval(function() {
             let now = new Date();
             let diff = now - startDate;
@@ -310,7 +251,7 @@
             document.getElementById("hours").innerText = Math.floor((diff/3600000)%24);
             document.getElementById("minutes").innerText = Math.floor((diff/60000)%60);
             document.getElementById("seconds").innerText = Math.floor((diff/1000)%60);
-
+            
             let bDiff = bDayDate - now;
             if (bDiff > 0) {
                 document.getElementById("b-days").innerText = Math.floor(bDiff / (1000 * 60 * 60 * 24));
@@ -321,58 +262,15 @@
         }, 1000);
     }
 
-    function openBirthdayGift() {
-        let now = new Date();
-        let bDayDate = new Date("2026-03-15T00:00:00");
-        
-        // لو داخل باليوزر المطور هيفتح فوراً، لو عادي لازم يستنى التاريخ
-        if (isSuperAdmin || now >= bDayDate) {
-            openMessage('giftReady');
-        } else {
-            openMessage('giftTooEarly');
-        }
-    }
-
-    function showScreen(screenId) {
-        document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
-        document.getElementById(screenId).style.display = 'block';
-    }
-
-    function closeAlbum() { showScreen('albumsScreen'); }
-
     function openMessage(type) {
-        let text = ""; let isHand = false;
-        document.getElementById("normalButtons").style.display = "block";
-        document.getElementById("promiseButtons").style.display = "none";
-
-        if(type === 'success') text = "شطورة عنوووووووودي 😊🌚";
-        else if(type === 'fail') text = "جربي تاني 👀😂";
-        else if(type === 'msg1') text = "كل عام وانتي بخير وطيبة 🤍 اول رمضان سوااااا ومش آخر واحد باذن الله 🤲🏻 وعدتك وقده أن شاء الله 🤲🏻💞";
-        else if(type === 'msg2') text = "Thanks for everything 3nnooooooody🤍🙈 احلى صدفة والله ربنا يديمها ليا ومتبقاش فترة وخلاص باذن الله أن شاء الله🥹💞";
-        else if(type === 'msg3') text = "معايا حاجات كتير بس خلي دول دلوقتي 😂♥️ احلى واغلى عنووودي ف الدنيا ربنا يديمها باذن الللللللللللله 🌚🤲🏻🤲🏻";
-        else if(type === 'surprise') text = "احلى صدفة والله ربنا بيحبني عشان بعتك ليا كل يوم بشكره والله احلى واغلى عنووودي🌚 متزعليش مني وحقك عليا لو بضايقك أو برخم عليكي اكيد مقصدش بس ببقي خايف عليكي وغيران وحطي تحت غيران دي مليون خط وكمان خايف اخسرك حقك عليا ي عنودي 🥹🤍";
-        else if(type === 'handMsg') { text = "ودي مش آخر حاجة بينا… ده إحنا لسه في أول الحكاية 🤍"; isHand = true; }
-        else if(type === 'giftTooEarly') text = "اصبري يا طفصة لسه وقته مجاش😑🤌🏻😂";
-        else if(type === 'giftReady') text = "ي عنوووووووودي👀كل عام وانتي بخير وعقبال مليون سنه ف صحة وسعادة يارب وعقبال ما تحققي اللي نفسك يارب واشوفك احسن واحدة ف الدنيا كلها🫶🏻😊 سنة جديدة عليكي تكون احلى وأسعد واجمل من اللي فاتت باذن الله🤲🏻♥️اول عيد ميلاد ليكي معايا ومش اخر واحد باذن الله يارب🥹🤲🏻🤍🤍كل عام وانتي طيبة ي عنوووداااااااااااااااي 🌚🤍";
-
+        let text = "";
+        if(type === 'fail') text = "جربي تاني 👀😂";
+        else if(type === 'distMsg') text = "عمر ما المسافات يوم ما بعدت بينا لو ما بينا بلاد متغربناااش ف قلوبناااااااااا 🥹🤍حتي واحنا بعيد ف انا جنبك بردو👀😊";
         document.getElementById("actualText").innerText = text;
-        if(isHand) { document.getElementById("normalButtons").style.display = "none"; document.getElementById("promiseButtons").style.display = "flex"; }
         document.getElementById("overlayMsg").style.display = "flex";
-    }
-
-    function promiseEffect() {
-        for(let i=0; i<80; i++) {
-            setTimeout(() => {
-                let h = document.createElement("div"); h.className = "promise-heart"; h.innerHTML = "❤️";
-                h.style.left = Math.random() * 100 + "vw"; h.style.top = "-5vh";
-                h.style.animationDuration = (Math.random()*2+1)+"s";
-                document.body.appendChild(h); setTimeout(() => h.remove(), 3000);
-            }, i * 25);
-        }
     }
 
     function toggleMessage(show) { document.getElementById("overlayMsg").style.display = show ? "flex" : "none"; }
 </script>
-
 </body>
 </html>
